@@ -1,32 +1,49 @@
-# README
+# VPN Server and Client
 
-## VPN Server
+This repository contains a simple implementation of a VPN server and client using Python.
 
-This project is a Virtual Private Network (VPN) server that operates at the network layer (Layer 3) of the OSI model. It uses a TUN device to encapsulate and decapsulate IP packets, providing a secure and private connection between two networks.
+## Description
 
-The VPN server reads data from a UDP socket and writes it to a TUN device, or reads data from the TUN device and sends it via the UDP socket. This creates a virtual network connection between two networks.
+Both the server and the client utilize the UDP protocol for communication. The server supports multiple clients and can handle incoming connections asynchronously. The client can establish a connection with the server and maintain it using keepalive messages.
 
-### Features
+## Requirements
 
-- Works at the network layer (Layer 3), handling IP packets.
-- Uses TUN device for data encapsulation and decapsulation.
-- Supports multiple sessions.
-- Session expiration handling.
-- Simple authentication mechanism.
+- Python 3.x
+- Linux environment (due to the usage of `/dev/net/tun`)
 
-### Usage
+## Usage
 
-To use the VPN server, simply run the Python script on your server:
+### Server
 
-```bash
-python3 vpn_server.py
-```
+1. Clone the repository.
+2. Navigate to the server's directory.
+3. Run the server script: `python server.py`.
 
-Make sure to replace the `PASSWORD` and `BIND_ADDRESS` constants in the script with your own values.
+### Client
 
-## Dependencies
+1. Clone the repository.
+2. Navigate to the client's directory.
+3. Run the client script with the server's address and port as arguments: `python client.py [remote_ip] [remote_port]`.
 
-- Python 3
-- Linux system with `/dev/net/tun` support
+## Configuration
 
----
+Both the server and client scripts can be configured by modifying the constants at the beginning of the scripts. Important parameters include:
+
+- `PASSWORD`: The password for establishing a connection between the client and the server.
+- `BIND_ADDRESS`: The IP address and port the server should listen on.
+- `NETWORK`: The network range for the VPN.
+- `BUFFER_SIZE`: The maximum size of the packets that can be sent or received.
+- `MTU`: Maximum Transmission Unit.
+- `KEEPALIVE`: The interval at which the client sends keepalive messages to the server.
+
+## Disclaimer
+
+This is a simple implementation meant for educational purposes and should not be used in production as it may have security vulnerabilities.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT
