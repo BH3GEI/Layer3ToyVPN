@@ -17,7 +17,7 @@ To use these scripts, you need to run them with specific command-line arguments.
 For the `ToyVPN.py` script, run:
 
 ```
-sudo python3 ToyVPN.py <mode> [remote_ip] [remote_port]
+sudo python3 ToyVPN.py client [remote_ip] [remote_port]
 ```
 
 Or
