@@ -6,6 +6,7 @@ import sys
 import time
 import struct
 import socket
+import base64
 from fcntl import ioctl
 from select import select
 from threading import Thread
@@ -36,7 +37,15 @@ def createTunnel(tunName='tun%d', tunMode=IFF_TUN):
 def startTunnel(tunName, localIP, peerIP):
     os.popen('ifconfig %s %s dstaddr %s mtu %s up' %
              (tunName, localIP, peerIP, MTU)).read()
+    
+def encode_data(data):
+    # 使用Base64对数据进行编码
+    return base64.b64encode(data)
 
+def decode_data(data):
+    # 解码Base64数据
+    return base64.b64decode(data)
+    
 class VPN():
     def __init__(self, mode, remote_address=None):
         self.mode = mode
@@ -66,6 +75,7 @@ class VPN():
         self.udp.sendto(PASSWORD,self.to)
         try:
             data,addr = self.udp.recvfrom(BUFFER_SIZE)
+            data = decode_data(data)
             tunfd,tunName = createTunnel()
             localIP,peerIP = data.decode().split(';')
             print('Local ip: %s\tPeer ip: %s' % (localIP,peerIP))
@@ -166,6 +176,8 @@ class VPN():
             for r in readab:
                 if r == self.udp:
                     data, addr = self.udp.recvfrom(BUFFER_SIZE)
+                    data = decode_data(data)
+
                     if self.mode == "client":
                         try:
                             os.write(tunfd, data)
@@ -190,6 +202,7 @@ class VPN():
                             continue
                 else:
                     data = os.read(r, BUFFER_SIZE)
+                    data = encode_data(data)
                     addr = self.getAddrByTun(r)
                     self.udp.sendto(data, addr)
                     if DEBUG: print(now() + 'to      (%s:%s)' % addr, data[:10])
