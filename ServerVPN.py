@@ -133,7 +133,7 @@ class Server():
                         except OSError:
                             if not self.auth(addr, data, tunfd): continue
                             self.createSession(addr)
-                            if DEBUG: print('Clinet %s:%s connect successful' % addr)
+                            if DEBUG: print('Client %s:%s connect successful' % addr)
                     except OSError:
                         continue
                 else:
