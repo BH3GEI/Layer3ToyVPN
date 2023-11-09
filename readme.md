@@ -1,49 +1,51 @@
-# VPN Server and Client
+# Toy VPN Project
 
-This repository contains a simple implementation of a VPN server and client using Python.
+This project consists of three Python scripts that implement a basic VPN (Virtual Private Network). The VPN is created using a TUN interface, a network layer device that operates on layer 3 packets like IP packets. TUN interfaces are software loopback mechanisms that can be controlled by user-space programs.
 
-## Description
+## Script Overview
 
-Both the server and the client utilize the UDP protocol for communication. The server supports multiple clients and can handle incoming connections asynchronously. The client can establish a connection with the server and maintain it using keepalive messages.
+1. **ToyVPN.py:** This script can function as both a VPN server and a client. It can establish a VPN connection with a remote server or listen for incoming connections as a server. The script includes functions for encoding and decoding data using Base64. I tried to bypass the GFW using this technique, but my server quickly got banned transferring big amount of data.
 
-## Requirements
+2. **ServerVPN.py:** This script is the server-side component of the VPN. It listens for incoming VPN connections, authenticates clients, and maintains the VPN sessions.
 
-- Python 3.x
-- Linux environment (due to the usage of `/dev/net/tun`)
+3. **ClientVPN.py:** This script is the client-side component. It is used to establish a VPN connection with the server. It sends a keepalive message to the server every few seconds to maintain the connection.
 
 ## Usage
 
-### Server
+To use these scripts, you need to run them with specific command-line arguments. 
 
-1. Clone the repository.
-2. Navigate to the server's directory.
-3. Run the server script: `python server.py`.
+For the `ToyVPN.py` script, run:
 
-### Client
+```
+python ToyVPN.py <mode> [remote_ip] [remote_port]
+```
 
-1. Clone the repository.
-2. Navigate to the client's directory.
-3. Run the client script with the server's address and port as arguments: `python client.py [remote_ip] [remote_port]`.
+The `<mode>` argument must be either "client" or "server". If the mode is "client", you must also provide the `[remote_ip]` and `[remote_port]` arguments to specify the VPN server's IP address and port.
+
+For the `ServerVPN.py` script, just run:
+
+```
+python ServerVPN.py
+```
+
+This script doesn't require any command-line arguments. It will start a VPN server that listens for incoming connections.
+
+For the `ClientVPN.py` script, run:
+
+```
+python ClientVPN.py [remote_ip] [remote_port]
+```
+
+The `[remote_ip]` and `[remote_port]` arguments specify the VPN server's IP address and port.
 
 ## Configuration
 
-Both the server and client scripts can be configured by modifying the constants at the beginning of the scripts. Important parameters include:
+The scripts use a password for authentication, which is defined as `PASSWORD` in the scripts. It's currently set to `b'4fb88ca224e'`. If you want to use a different password, you need to change this value in all three scripts.
 
-- `PASSWORD`: The password for establishing a connection between the client and the server.
-- `BIND_ADDRESS`: The IP address and port the server should listen on.
-- `NETWORK`: The network range for the VPN.
-- `BUFFER_SIZE`: The maximum size of the packets that can be sent or received.
-- `MTU`: Maximum Transmission Unit.
-- `KEEPALIVE`: The interval at which the client sends keepalive messages to the server.
+The VPN network is defined by the `NETWORK` variable in the scripts, which is currently set to '10.0.0.0/24'. The `IPRANGE` variable is a list of the IP addresses in this network.
 
-## Disclaimer
+The server binds to the IP address and port specified by `BIND_ADDRESS`, which is currently set to '0.0.0.0',2003. This means that it listens on all available network interfaces and port 2003.
 
-This is a simple implementation meant for educational purposes and should not be used in production as it may have security vulnerabilities.
+## Note
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT
+These scripts are basic implementations of a VPN and are likely not suitable for use in a production environment. They do not include many features that a full-featured VPN would have, such as encryption, compression, or support for multiple concurrent connections. However, they can serve as a starting point for learning about VPNs and network programming in Python.
