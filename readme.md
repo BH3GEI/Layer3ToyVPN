@@ -26,7 +26,6 @@ Or
 sudo python3 ToyVPN.py server
 ```
 
-The `<mode>` argument must be either "client" or "server". If the mode is "client", you must also provide the `[remote_ip]` and `[remote_port]` arguments to specify the VPN server's IP address and port.
 
 For the `ServerVPN.py` script, just run:
 
