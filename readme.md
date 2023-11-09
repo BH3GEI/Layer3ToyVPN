@@ -17,7 +17,13 @@ To use these scripts, you need to run them with specific command-line arguments.
 For the `ToyVPN.py` script, run:
 
 ```
-python ToyVPN.py <mode> [remote_ip] [remote_port]
+sudo python3 ToyVPN.py <mode> [remote_ip] [remote_port]
+```
+
+Or
+
+```
+sudo python3 ToyVPN.py server
 ```
 
 The `<mode>` argument must be either "client" or "server". If the mode is "client", you must also provide the `[remote_ip]` and `[remote_port]` arguments to specify the VPN server's IP address and port.
@@ -25,7 +31,7 @@ The `<mode>` argument must be either "client" or "server". If the mode is "clien
 For the `ServerVPN.py` script, just run:
 
 ```
-python ServerVPN.py
+sudo python3 ServerVPN.py
 ```
 
 This script doesn't require any command-line arguments. It will start a VPN server that listens for incoming connections.
@@ -33,7 +39,7 @@ This script doesn't require any command-line arguments. It will start a VPN serv
 For the `ClientVPN.py` script, run:
 
 ```
-python ClientVPN.py [remote_ip] [remote_port]
+sudo python3 ClientVPN.py [remote_ip] [remote_port]
 ```
 
 The `[remote_ip]` and `[remote_port]` arguments specify the VPN server's IP address and port.
