@@ -4,7 +4,7 @@ This project consists of three Python scripts that implement a basic VPN (Virtua
 
 ## Script Overview
 
-1. **ToyVPN.py:** This script can function as both a VPN server and a client. It can establish a VPN connection with a remote server or listen for incoming connections as a server. The script includes functions for encoding and decoding data using Base64. I tried to bypass the GFW using this technique, but my server quickly got banned transferring big amount of data.
+1. **ToyVPN.py:** This script can function as both a VPN server and a client. It can establish a VPN connection with a remote server or listen for incoming connections as a server. The script includes functions for encoding and decoding data using Base64. I tried to bypass the GFW using this technique, but my server quickly got banned for transferring big amount of data.
 
 2. **ServerVPN.py:** This script is the server-side component of the VPN. It listens for incoming VPN connections, authenticates clients, and maintains the VPN sessions.
 
@@ -23,7 +23,7 @@ sudo python3 ToyVPN.py client [remote_ip] [remote_port]
 Or
 
 ```
-sudo python3 ToyVPN.py server
+sudo python3 ToyVPN.py server [local_port]
 ```
 
 The `<mode>` argument must be either "client" or "server". If the mode is "client", you must also provide the `[remote_ip]` and `[remote_port]` arguments to specify the VPN server's IP address and port.
